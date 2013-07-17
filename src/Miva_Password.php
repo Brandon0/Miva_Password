@@ -36,14 +36,14 @@ class Miva_Password {
      * Miva's default length for a password salt
      * @var integer
      */
-    protected $salt_length = 8;
+    static protected $salt_length = 8;
 
     /**
      * Create a unique salt string using the best source of random we can find
      *
      * @return string MIME base64
      */
-    public function create_salt() {
+    public static function create_salt() {
         $length = self::$salt_length;
         $salt = '';
 
@@ -86,7 +86,7 @@ class Miva_Password {
      * @param  integer $derived_key_length The maximum string length enforced on the derived key; 20 by default
      * @return string                      A secure password hash string
      */
-    public function create_hash($password, $salt='', $pbkdf_version='PBKDF1', $hash_algo='sha1', $iterations=1000, $derived_key_length=20) {
+    public static function create_hash($password, $salt='', $pbkdf_version='PBKDF1', $hash_algo='sha1', $iterations=1000, $derived_key_length=20) {
         if ($salt === '') {
             $salt = self::create_salt();
         }
@@ -126,7 +126,7 @@ class Miva_Password {
      * @param string $hash A PBKDF hash; separated by colons
      * @return string
      */
-    public function extract_algorithim_info($good_hash, $option='') {
+    public static function extract_algorithim_info($good_hash, $option='') {
         //make sure we have the proper formatted hash
         $good_hash_infoArray = explode(':', $good_hash);
         if (count($good_hash_infoArray) < 5) {
@@ -162,7 +162,7 @@ class Miva_Password {
      *
      * @return string
      */
-    public function generate($pw_min_len=6, $pw_complex=0) {
+    public static function generate($pw_min_len=6, $pw_complex=0) {
         if ($pw_min_len < 6) $pw_min_len = 6;
         if ($pw_complex < 0) $pw_complex = 0;
 
@@ -230,7 +230,7 @@ class Miva_Password {
      * @param  string $good_hash The hash string we are checking against
      * @return boolean           True if the two strings contain the same password
      */
-    public function verify($password, $good_hash) {
+    public static function verify($password, $good_hash) {
         //first get all of the settings and details used in the creation of the good hash
         $algorithim_infoArray = self::extract_algorithim_info($good_hash);
         if (empty($algorithim_infoArray)) {
@@ -252,7 +252,7 @@ class Miva_Password {
      * @param  string $character_set
      * @return string
      */
-    protected function insertrandom($password, $character_set) {
+    protected static function insertrandom($password, $character_set) {
         $random_position = mt_rand(0, strlen($password)-1);
         $random_char = $character_set[mt_rand(0, strlen($character_set)-1)];
 
@@ -269,7 +269,7 @@ class Miva_Password {
      * @param  integer $derived_key_length The maximum length of the resulting key; 20 by default
      * @return string                      A PBKDF1 password hash string
      */
-    protected function pbkdf1($password, $salt, $hash_algo, $iterations, $derived_key_length) {
+    protected static function pbkdf1($password, $salt, $hash_algo, $iterations, $derived_key_length) {
         $hash_algo = strtolower($hash_algo);
         $iterations = (int)$iterations;
         $derived_key_length = (int)$derived_key_length;
@@ -320,7 +320,7 @@ class Miva_Password {
      * @param  integer $derived_key_length The maximum length of the resulting key; 20 by default
      * @return string                      A PBKDF2 password hash string
      */
-    protected function pbkdf2($password, $salt, $hash_algo, $iterations, $derived_key_length) {
+    protected static function pbkdf2($password, $salt, $hash_algo, $iterations, $derived_key_length) {
         $hash_algo = strtolower($hash_algo);
         $iterations = (int)$iterations;
         $derived_key_length = (int)$derived_key_length;
