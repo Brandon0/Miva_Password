@@ -92,8 +92,7 @@ class Miva_Password {
         }
 
         if (!in_array($pbkdf_version, array('PBKDF1', 'PBKDF2'))) {
-            #throw new InvalidArgumentException($pbkdf_version . ' not supported');
-            return false;
+            throw new InvalidArgumentException($pbkdf_version . ' not supported');
         }
 
         switch ($pbkdf_version) {
@@ -286,17 +285,14 @@ class Miva_Password {
 
         //supported hash algorithims
         if (!in_array($hash_algo, array('md2', 'md5', 'sha1'))) {
-            #throw new InvalidArgumentException($hash_algo . ' hash algorithim not supported');
-            return false;
+            throw new InvalidArgumentException($hash_algo . ' hash algorithim not supported');
         }
         //iterations and derived key length must be positive
         if ($iterations <= 0) {
-            #throw new InvalidArgumentException('Iterations must be a positive integer');
-            return false;
+            throw new InvalidArgumentException('Iterations must be a positive integer');
         }
         if ($derived_key_length <= 0) {
-            #throw new InvalidArgumentException('Derived key must be a positive integer');
-            return false;
+            throw new InvalidArgumentException('Derived key must be a positive integer');
         }
         //derived key length is enforced for PBKDF1 based on hash algorithim
         if ($hash_algo === 'md5' && $derived_key_length > 16) {
@@ -337,17 +333,14 @@ class Miva_Password {
 
         //supported hash algorithims
         if(!in_array($hash_algo, hash_algos())) {
-            #throw new InvalidArgumentException($hash_algo . ' hash algorithim not supported');
-            return false;
+            throw new InvalidArgumentException($hash_algo . ' hash algorithim not supported');
         }
         //iterations and derived key length must be positive
         if ($iterations <= 0) {
-            #throw new InvalidArgumentException('Iterations must be a positive integer');
-            return false;
+            throw new InvalidArgumentException('Iterations must be a positive integer');
         }
         if ($derived_key_length <= 0) {
-            #throw new InvalidArgumentException('Derived key must be a positive integer');
-            return false;
+            throw new InvalidArgumentException('Derived key must be a positive integer');
         }
 
         //@Note: This is straight from https://defuse.ca/php-pbkdf2.htm
