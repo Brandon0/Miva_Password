@@ -90,6 +90,7 @@ class Miva_Password {
         if ($salt === '') {
             $salt = self::create_salt();
         }
+        $pbkdf_version = strtoupper($pbkdf_version);
 
         if (!in_array($pbkdf_version, array('PBKDF1', 'PBKDF2'))) {
             throw new InvalidArgumentException($pbkdf_version . ' not supported');
