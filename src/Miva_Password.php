@@ -123,8 +123,9 @@ class Miva_Password {
      *     Salt
      *     Derived key
      *
-     * @param string $hash A PBKDF hash; separated by colons
-     * @return string
+     * @param string $hash      A PBKDF hash; separated by colons
+     * @param string $option='' The key of the spcific detail you want returned
+     * @return mixed            Returns an array unless an option param is passed.
      */
     public static function extract_algorithim_info($good_hash, $option='') {
         //make sure we have the proper formatted hash
@@ -160,6 +161,15 @@ class Miva_Password {
      * Generate a unique and secure password. This password will be returned as plain
      * text and is NOT TO BE STORED ANYWHERE!
      *
+     * @param int $pw_min_len The minimum length required for the new password.
+     *      Quick note: Specifiying a minimum does not guarantee that the
+     *      password will be exactly that length, it could be longer based on
+     *      the $pw_complex parameter.
+     * @param int $pw_complex The password complexity level
+     *      0 = No requirements
+     *      1 = Requires a letter and either a digit or special character
+     *      2 = Requires an upper case letter, a lower case letter, and either a
+     *          digit or special character
      * @return string
      */
     public static function generate($pw_min_len=6, $pw_complex=0) {
