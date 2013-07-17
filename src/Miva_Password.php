@@ -250,7 +250,7 @@ class Miva_Password {
         //generate a hash from the given password using the settings from good hash
         $unknown_hash = self::create_hash($password, $algorithim_infoArray['salt'], $algorithim_infoArray['PBKDF_version'], $algorithim_infoArray['hash_algorithim'], $algorithim_infoArray['iterations'], $algorithim_infoArray['derived_key_length']);
 
-        return (bool)($unknown_hash === $good_hash);
+        return ($unknown_hash === $good_hash);
     }
 
     /**
