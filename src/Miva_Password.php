@@ -333,7 +333,7 @@ class Miva_Password {
         $derived_key_length = (int)$derived_key_length;
 
         //supported hash algorithims
-        if(!in_array($hash_algo, hash_algos())) {
+        if (!in_array($hash_algo, hash_algos())) {
             throw new InvalidArgumentException($hash_algo . ' hash algorithim not supported');
         }
         //iterations and derived key length must be positive
@@ -349,7 +349,7 @@ class Miva_Password {
         $hash_length = strlen(hash($hash_algo, '', true));
         $block_count = ceil($derived_key_length / $hash_length);
         $derived_key = '';
-        for($i=1; $i<=$block_count; $i++) {
+        for ($i=1; $i<=$block_count; $i++) {
             //$i encoded as 4 bytes, big endian.
             $last = $salt . pack('N', $i);
             //first iteration
